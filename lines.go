@@ -1823,3 +1823,438 @@ func Slice(a []string, nbrs ...int) []string {
 }
 
 //7
+
+//findpairs
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func findPairs(arr []int, target int) [][]int {
+	var pairs [][]int
+	for i := 0; i < len(arr); i++ {
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i]+arr[j] == target {
+				pairs = append(pairs, []int{i, j})
+			}
+		}
+	}
+	return pairs
+}
+
+func main() {
+	if len(os.Args) != 3 {
+		fmt.Println("Invalid input.")
+		return
+	}
+	arrStr := os.Args[1]
+	targetStr := os.Args[2]
+	if !strings.HasPrefix(arrStr, "[") || !strings.HasSuffix(arrStr, "]") {
+		fmt.Println("Invalid input.")
+		return
+	}
+	arrStr = strings.Trim(arrStr, "[]")
+	if arrStr == "" {
+		fmt.Println("Invalid input.")
+		return
+	}
+	parts := strings.Split(arrStr, ", ")
+	var arr []int
+	for _, p := range parts {
+		n, err := strconv.Atoi(strings.TrimSpace(p))
+		if err != nil {
+			fmt.Printf("Invalid number: %s\n", p)
+			return
+		}
+		arr = append(arr, n)
+	}
+	target, err := strconv.Atoi(targetStr)
+	if err != nil {
+		fmt.Println("Invalid target sum.")
+		return
+	}
+	pairs := findPairs(arr, target)
+	if len(pairs) == 0 {
+		fmt.Println("No pairs found.")
+	} else {
+		fmt.Printf("Pairs with sum %d: %v\n", target, pairs)
+	}
+}
+// ||
+
+package main
+
+import (
+	"os"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		printString("Invalid input.\n")
+		return
+	}
+
+	arrStr := os.Args[1]
+	targetStr := os.Args[2]
+
+	arrStr = trimSpace(arrStr)
+	n := len(arrStr)
+	if n < 2 || arrStr[0] != '[' || arrStr[n-1] != ']' {
+		printString("Invalid input.\n")
+		return
+	}
+
+	inner := arrStr[1 : n-1]
+	
+	// Handle empty array case []
+	var arr []int
+	if !innerAllSpace(inner) {
+		rawElements := splitByComma(inner)
+		for _, elem := range rawElements {
+			trimmed := trimSpace(elem)
+			val, ok := customAtoi(trimmed)
+			if !ok {
+				printString("Invalid number: ")
+				printString(trimmed)
+				printString("\n")
+				return
+			}
+			arr = append(arr, val)
+		}
+	}
+
+	targetTrimmed := trimSpace(targetStr)
+	target, ok := customAtoi(targetTrimmed)
+	if !ok {
+		printString("Invalid target sum.\n")
+		return
+	}
+
+	// Find all pairs that sum up to the target
+	var pairs [][2]int
+	for i := 0; i < len(arr); i++ {
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i]+arr[j] == target {
+				pairs = append(pairs, [2]int{i, j})
+			}
+		}
+	}
+
+	// Output results based on findings
+	if len(pairs) == 0 {
+		printString("No pairs found.\n")
+	} else {
+		printString("Pairs with sum ")
+		printInt(target)
+		printString(": ")
+		printPairs(pairs)
+		printString("\n")
+	}
+}
+
+// --- Helper Functions (Replacing strings and strconv) ---
+
+func printString(s string) {
+	os.Stdout.WriteString(s)
+}
+
+func trimSpace(s string) string {
+	start := 0
+	for start < len(s) && (s[start] == ' ' || s[start] == '\t' || s[start] == '\n' || s[start] == '\r') {
+		start++
+	}
+	end := len(s)
+	for end > start && (s[end-1] == ' ' || s[end-1] == '\t' || s[end-1] == '\n' || s[end-1] == '\r') {
+		end--
+	}
+	return s[start:end]
+}
+
+func innerAllSpace(s string) bool {
+	for i := 0; i < len(s); i++ {
+		if s[i] != ' ' && s[i] != '\t' && s[i] != '\n' && s[i] != '\r' {
+			return false
+		}
+	}
+	return true
+}
+
+func splitByComma(s string) []string {
+	var result []string
+	current := ""
+	for i := 0; i < len(s); i++ {
+		if s[i] == ',' {
+			result = append(result, current)
+			current = ""
+		} else {
+			current += string(s[i])
+		}
+	}
+	result = append(result, current)
+	return result
+}
+
+func customAtoi(s string) (int, bool) {
+	if len(s) == 0 {
+		return 0, false
+	}
+	sign := 1
+	start := 0
+	if s[0] == '-' {
+		sign = -1
+		start = 1
+	} else if s[0] == '+' {
+		start = 1
+	}
+
+	if start >= len(s) {
+		return 0, false
+	}
+
+	val := 0
+	for i := start; i < len(s); i++ {
+		ch := s[i]
+		if ch < '0' || ch > '9' {
+			return 0, false
+		}
+		val = val*10 + int(ch-'0')
+	}
+	return val * sign, true
+}
+
+func printInt(n int) {
+	if n == 0 {
+		printString("0")
+		return
+	}
+	if n < 0 {
+		printString("-")
+		n = -n
+	}
+	var digits []byte
+	for n > 0 {
+		digits = append([]byte{byte('0' + n%10)}, digits...)
+		n /= 10
+	}
+	os.Stdout.Write(digits)
+}
+
+func printPairs(pairs [][2]int) {
+	printString("[")
+	for i, p := range pairs {
+		if i > 0 {
+			printString(" ")
+		}
+		printString("[")
+		printInt(p[0])
+		printString(" ")
+		printInt(p[1])
+		printString("]")
+	}
+	printString("]")
+}
+//revwstr
+
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		return
+	}
+	words := strings.Fields(os.Args[1])
+	for i := len(words) - 1; i >= 0; i-- {
+		fmt.Print(words[i])
+		if i > 0 {
+			fmt.Print(" ")
+		}
+	}
+	fmt.Println()
+}
+// ||
+
+package main
+
+import (
+	"os"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		return
+	}
+
+	s := os.Args[1]
+
+	var words []string
+	current := ""
+	for i := 0; i < len(s); i++ {
+		if s[i] == ' ' {
+			words = append(words, current)
+			current = ""
+		} else {
+			current += string(s[i])
+		}
+	}
+	words = append(words, current)
+	for i := len(words) - 1; i >= 0; i-- {
+		os.Stdout.WriteString(words[i])
+		if i > 0 {
+			os.Stdout.WriteString(" ")
+		}
+	}
+	os.Stdout.WriteString("\n")
+}
+//rostring
+
+package main
+
+import (
+	"os"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		os.Stdout.WriteString("\n")
+		return
+	}
+
+	s := os.Args[1]
+
+	var words []string
+	current := ""
+	for i := 0; i < len(s); i++ {
+		if s[i] == ' ' || s[i] == '\t' || s[i] == '\n' || s[i] == '\r' {
+			if current != "" {
+				words = append(words, current)
+				current = ""
+			}
+		} else {
+			current += string(s[i])
+		}
+	}
+	if current != "" {
+		words = append(words, current)
+	}
+
+	if len(words) == 0 {
+		os.Stdout.WriteString("\n")
+		return
+	}
+
+	rotated := make([]string, len(words))
+	copy(rotated, words[1:])
+	rotated[len(words)-1] = words[0]
+
+	for i, w := range rotated {
+		os.Stdout.WriteString(w)
+		if i < len(rotated)-1 {
+			os.Stdout.WriteString(" ")
+		}
+	}
+	os.Stdout.WriteString("\n")
+}
+// ||
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		fmt.Println()
+		return
+	}
+	words := strings.Fields(os.Args[1])
+	if len(words) == 0 {
+		fmt.Println()
+		return
+	}
+	result := strings.Join(words[1:], " ") + " " + words[0]
+	fmt.Println(strings.TrimSpace(result))
+}
+//
+
+import (
+	"fmt"
+	"strings"
+)
+
+func WordFlip(str string) string {
+	if len(str) == 0 {
+		return "Invalid Output\n"
+	}
+
+	words := strings.Fields(str)
+	if len(words) == 0 {
+		return "\n"
+	}
+
+	for i, j := 0, len(words)-1; i < j; i, j = i+1, j-1 {
+		words[i], words[j] = words[j], words[i]
+	}
+
+	return strings.Join(words, " ") + "\n"
+}
+// ||
+package piscine
+
+func WordFlip(str string) string {
+	start := 0
+	for start < len(str) && (str[start] == ' ' || str[start] == '\t' || str[start] == '\n' || str[start] == '\r') {
+		start++
+	}
+	end := len(str)
+	for end > start && (str[end-1] == ' ' || str[end-1] == '\t' || str[end-1] == '\n' || str[end-1] == '\r') {
+		end--
+	}
+
+	if start >= end {
+		return "Invalid Output\n"
+	}
+
+	trimmed := str[start:end]
+
+	var words []string
+	current := ""
+	for i := 0; i < len(trimmed); i++ {
+		if trimmed[i] == ' ' || trimmed[i] == '\t' || trimmed[i] == '\n' || trimmed[i] == '\r' {
+			if current != "" {
+				words = append(words, current)
+				current = ""
+			}
+		} else {
+			current += string(trimmed[i])
+		}
+	}
+	if current != "" {
+		words = append(words, current)
+	}
+
+	if len(words) == 0 {
+		return "Invalid Output\n"
+	}
+
+	result := ""
+	for i := len(words) - 1; i >= 0; i-- {
+		result += words[i]
+		if i > 0 {
+			result += " "
+		}
+	}
+	result += "\n"
+
+	return result
+}
