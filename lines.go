@@ -1755,34 +1755,30 @@ func NotDecimal(dec string) string {
 	return result + "\n"
 }
 //
-
 func RevConcatAlternate(slice1, slice2 []int) []int {
-	var result []int
+	idx1 := len(slice1) - 1
+	idx2 := len(slice2) - 1
+	result := make([]int, 0, len(slice1)+len(slice2))
 
-	rev1 := make([]int, len(slice1))
-	for i := 0; i < len(slice1); i++ {
-		rev1[i] = slice1[len(slice1)-1-i]
-	}
-
-	rev2 := make([]int, len(slice2))
-	for i := 0; i < len(slice2); i++ {
-		rev2[i] = slice2[len(slice2)-1-i]
-	}
-
-	if len(slice1) >= len(slice2) {
-		for i := 0; i < len(slice2); i++ {
-			result = append(result, rev1[i], rev2[i])
+	for idx1 >= 0 || idx2 >= 0 {
+		if idx1 > idx2 {
+			result = append(result, slice1[idx1])
+			idx1--
+		} else if idx2 > idx1 {
+			result = append(result, slice2[idx2])
+			idx2--
+		} else {
+			for idx1 >= 0 {
+				result = append(result, slice1[idx1], slice2[idx2])
+				idx1--
+				idx2--
+			}
 		}
-		result = append(result, rev1[len(slice2):]...)
-	} else {
-		for i := 0; i < len(slice1); i++ {
-			result = append(result, rev2[i], rev1[i])
-		}
-		result = append(result, rev2[len(slice1):]...)
 	}
 
 	return result
 }
+
 //
 
 func Slice(a []string, nbrs ...int) []string {
