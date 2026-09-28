@@ -1,3 +1,78 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Account struct {
+	balance float64
+}
+
+func (a *Account) Deposit(amount float64) {
+	if amount > 0 {
+		a.balance += amount
+		fmt.Printf("Successfully deposited: $%.2f\n", amount)
+	} else {
+		fmt.Println("Invalid deposit amount.")
+	}
+}
+
+func (a *Account) Withdraw(amount float64) {
+	if amount > 0 && amount <= a.balance {
+		a.balance -= amount
+		fmt.Printf("Successfully withdrew: $%.2f\n", amount)
+	} else if amount > a.balance {
+		fmt.Println("Insufficient funds.")
+	} else {
+		fmt.Println("Invalid withdrawal amount.")
+	}
+}
+
+func (a *Account) CheckBalance() {
+	fmt.Printf("Current balance: $%.2f\n", a.balance)
+}
+
+func main() {
+	account := &Account{balance: 0.0}
+	var choice int
+	var amount float64
+
+	for {
+		fmt.Println("\n--- Bank Menu ---")
+		fmt.Println("1. Check Balance")
+		fmt.Println("2. Deposit")
+		fmt.Println("3. Withdraw")
+		fmt.Println("4. Exit")
+		fmt.Print("Choose an option: ")
+
+		_, err := fmt.Scan(&choice)
+		if err != nil {
+			fmt.Println("Invalid input. Please enter a number.")
+			continue
+		}
+
+		switch choice {
+		case 1:
+			account.CheckBalance()
+		case 2:
+			fmt.Print("Enter amount to deposit: ")
+			fmt.Scan(&amount)
+			account.Deposit(amount)
+		case 3:
+			fmt.Print("Enter amount to withdraw: ")
+			fmt.Scan(&amount)
+			account.Withdraw(amount)
+		case 4:
+			fmt.Println("Thank you for using the bank system.")
+			return
+		default:
+			fmt.Println("Invalid choice. Choose between 1 and 4.")
+		}
+	}
+}
+
+
+
 package piscine
 
 func CheckNumber(arg string) bool {
