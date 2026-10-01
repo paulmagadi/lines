@@ -1,78 +1,3 @@
-package main
-
-import (
-	"fmt"
-)
-
-type Account struct {
-	balance float64
-}
-
-func (a *Account) Deposit(amount float64) {
-	if amount > 0 {
-		a.balance += amount
-		fmt.Printf("Successfully deposited: $%.2f\n", amount)
-	} else {
-		fmt.Println("Invalid deposit amount.")
-	}
-}
-
-func (a *Account) Withdraw(amount float64) {
-	if amount > 0 && amount <= a.balance {
-		a.balance -= amount
-		fmt.Printf("Successfully withdrew: $%.2f\n", amount)
-	} else if amount > a.balance {
-		fmt.Println("Insufficient funds.")
-	} else {
-		fmt.Println("Invalid withdrawal amount.")
-	}
-}
-
-func (a *Account) CheckBalance() {
-	fmt.Printf("Current balance: $%.2f\n", a.balance)
-}
-
-func main() {
-	account := &Account{balance: 0.0}
-	var choice int
-	var amount float64
-
-	for {
-		fmt.Println("\n--- Bank Menu ---")
-		fmt.Println("1. Check Balance")
-		fmt.Println("2. Deposit")
-		fmt.Println("3. Withdraw")
-		fmt.Println("4. Exit")
-		fmt.Print("Choose an option: ")
-
-		_, err := fmt.Scan(&choice)
-		if err != nil {
-			fmt.Println("Invalid input. Please enter a number.")
-			continue
-		}
-
-		switch choice {
-		case 1:
-			account.CheckBalance()
-		case 2:
-			fmt.Print("Enter amount to deposit: ")
-			fmt.Scan(&amount)
-			account.Deposit(amount)
-		case 3:
-			fmt.Print("Enter amount to withdraw: ")
-			fmt.Scan(&amount)
-			account.Withdraw(amount)
-		case 4:
-			fmt.Println("Thank you for using the bank system.")
-			return
-		default:
-			fmt.Println("Invalid choice. Choose between 1 and 4.")
-		}
-	}
-}
-
-
-
 package piscine
 
 func CheckNumber(arg string) bool {
@@ -967,7 +892,7 @@ func ZipString(s string) string {
 	return string(result)
 }
 
-// ||
+// ||zipstring
 func ZipString(s string) string {
 	result := ""
 
@@ -988,6 +913,7 @@ func ZipString(s string) string {
 }
 
 //5
+// addprimesum
 package main
 
 import (
@@ -1066,7 +992,7 @@ func main() {
 }
 
 
-// |\
+// |
 package main
 
 import (
@@ -1106,7 +1032,7 @@ func main() {
 	fmt.Println(sum)
 }
 
-
+//
 func CanJump(nums []uint) bool {
 	if len(nums) == 0 {
 		return false
@@ -1128,7 +1054,7 @@ func CanJump(nums []uint) bool {
 	return pos == len(nums)-1
 }
 
-
+//
 import "fmt"
 
 func Chunk(slice []int, size int) {
@@ -1160,7 +1086,6 @@ import (
 	"github.com/01-edu/z01"
 )
 
-// PrintNbr prints an integer rune by rune.
 func PrintNbr(n int) {
 	if n < 0 {
 		z01.PrintRune('-')
@@ -1180,6 +1105,7 @@ func PrintNbr(n int) {
 	}
 }
 
+//
 func Chunk(slice []int, size int) {
 	if size <= 0 {
 		z01.PrintRune('\n')
@@ -1219,7 +1145,7 @@ func Chunk(slice []int, size int) {
 	z01.PrintRune(']')
 	z01.PrintRune('\n')
 }
-
+//
 
 func ConcatAlternate(slice1, slice2 []int) []int {
 	var result []int
@@ -1238,7 +1164,7 @@ func ConcatAlternate(slice1, slice2 []int) []int {
 
 	return result
 }
-
+// ||
 func ConcatSlice(slice1, slice2 []int) []int {
 	result := make([]int, len(slice1)+len(slice2))
 	copy(result, slice1)
@@ -1246,7 +1172,24 @@ func ConcatSlice(slice1, slice2 []int) []int {
 	return result
 }
 
-//
+func ConcatAlternate(slice1, slice2 []int) []int {
+	result := []int{}
+
+	if len(slice2) > len(slice1) {
+		slice1, slice2 = slice2, slice1
+	}
+
+	for i := 0; i < len(slice2); i++ {
+		result = append(result, slice1[i])
+		result = append(result, slice2[i])
+	}
+
+	result = append(result, slice1[len(slice2):]...)
+
+	return result
+}
+
+//fprime 
 package main
 
 import (
@@ -1289,7 +1232,7 @@ func main() {
 	fmt.Println()
 }
 
-// {
+//|fprime  {
 package main
 
 import (
@@ -1355,7 +1298,7 @@ func main() {
 
 	z01.PrintRune('\n')
 }
-//}
+//}hiddenp 
 
 package main
 
@@ -1385,6 +1328,115 @@ func main() {
 		fmt.Println(1)
 	} else {
 		fmt.Println(0)
+	}
+}
+
+// |
+package main
+
+import (
+	"os"
+
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+
+	s1 := os.Args[1]
+	s2 := os.Args[2]
+
+	j := 0
+
+	for _, char := range s2 {
+		if j < len(s1) && rune(s1[j]) == char {
+			j++
+		}
+	}
+
+	if j == len(s1) {
+		z01.PrintRune('1')
+	} else {
+		z01.PrintRune('0')
+	}
+
+	z01.PrintRune('\n')
+}
+//|
+package main
+
+import (
+	"os"
+
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		return
+	}
+
+	s1 := os.Args[1]
+	s2 := os.Args[2]
+
+	j := 0
+
+	for i := 0; i < len(s2) && j < len(s1); i++ {
+		if s1[j] == s2[i] {
+			j++
+		}
+	}
+
+	if j == len(s1) {
+		z01.PrintRune('1')
+	} else {
+		z01.PrintRune('0')
+	}
+
+	z01.PrintRune('\n')
+}
+//|
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 2 {
+		return
+	}
+
+	s1 := args[0]
+	s2 := args[1]
+
+	if len(s1) == 0 {
+		z01.PrintRune('1')
+		z01.PrintRune('\n')
+		return
+	}
+
+	i := 0
+	j := 0
+
+	for i < len(s1) && j < len(s2) {
+		if s1[i] == s2[j] {
+			i++
+		}
+		j++
+	}
+
+	if i == len(s1) {
+		z01.PrintRune('1')
+		z01.PrintRune('\n')
+	} else {
+		z01.PrintRune('0')
+		z01.PrintRune('\n')
 	}
 }
 //inter
@@ -1553,6 +1605,32 @@ func SaveAndMiss(arg string, num int) string {
 	}
 	return result
 }
+//|
+package piscine
+
+func SaveAndMiss(arg string, num int) string {
+	if num <= 0 {
+		return arg
+	}
+
+	var result []byte
+	save := true
+
+	for i := 0; i < len(arg); i += num {
+		end := i + num
+		if end > len(arg) {
+			end = len(arg)
+		}
+
+		if save {
+			result = append(result, arg[i:end]...)
+		}
+
+		save = !save
+	}
+
+	return string(result)
+}
 
 // union
 package main
@@ -1578,6 +1656,64 @@ func main() {
 		}
 	}
 	z01.PrintRune('\n')
+}
+// |
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 2 {
+		z01.PrintRune('\n')
+		return
+	}
+
+	seen := make(map[rune]bool)
+
+	for _, str := range args {
+		for _, r := range str {
+			if !seen[r] {
+				seen[r] = true
+				z01.PrintRune(r)
+			}
+		}
+	}
+	z01.PrintRune('\n')
+}
+// |
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 2 {
+		fmt.Println()
+		return
+	}
+
+	seen := make(map[rune]bool)
+	var result []rune
+
+	for _, str := range args {
+		for _, r := range str {
+			if !seen[r] {
+				seen[r] = true
+				result = append(result, r)
+			}
+		}
+	}
+
+	fmt.Println(string(result))
 }
 //wdmatch
 package main
@@ -1640,6 +1776,41 @@ func main() {
 	}
 	if canWrite(os.Args[1], os.Args[2]) {
 		fmt.Println(os.Args[1])
+	}
+}
+// |
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 2 {
+		return
+	}
+
+	s1 := args[0]
+	s2 := args[1]
+
+	i := 0
+	j := 0
+
+	for i < len(s1) && j < len(s2) {
+		if s1[i] == s2[j] {
+			i++
+		}
+		j++
+	}
+
+	if i == len(s1) {
+		for _, r := range s1 {
+			z01.PrintRune(r)
+		}
+		z01.PrintRune('\n')
 	}
 }
 
@@ -1718,7 +1889,50 @@ func FifthAndSkip(str string) string {
 	return result + "\n"
 }
 
-//
+//|
+package piscine
+
+func FifthAndSkip(str string) string {
+	if len(str) == 0 {
+		return "\n"
+	}
+
+	// Remove all spaces to process characters continuously
+	var clean []rune
+	for _, r := range str {
+		if r != ' ' {
+			clean = append(clean, r)
+		}
+	}
+
+	if len(clean) < 5 {
+		return "Invalid Input\n"
+	}
+
+	var result []rune
+	count := 0
+
+	for _, r := range clean {
+		if count == 5 {
+			// Skip the 6th character and reset count
+			count = 0
+			continue
+		}
+
+		if len(result) > 0 && count == 0 {
+			// Add a space before starting a new group of 5
+			result = append(result, ' ')
+		}
+
+		result = append(result, r)
+		count++
+	}
+
+	result = append(result, '\n')
+	return string(result)
+}
+
+//notdecimal
 package main
 
 import "fmt"
@@ -1829,33 +2043,151 @@ func NotDecimal(dec string) string {
 	result := strings.Replace(dec, ".", "", 1)
 	return result + "\n"
 }
-//
-func RevConcatAlternate(slice1, slice2 []int) []int {
-	idx1 := len(slice1) - 1
-	idx2 := len(slice2) - 1
-	result := make([]int, 0, len(slice1)+len(slice2))
+//|
+package piscine
 
-	for idx1 >= 0 || idx2 >= 0 {
-		if idx1 > idx2 {
-			result = append(result, slice1[idx1])
-			idx1--
-		} else if idx2 > idx1 {
-			result = append(result, slice2[idx2])
-			idx2--
-		} else {
-			for idx1 >= 0 {
-				result = append(result, slice1[idx1], slice2[idx2])
-				idx1--
-				idx2--
+func NotDecimal(dec string) string {
+	if dec == "" {
+		return "\n"
+	}
+
+	hasDot := false
+	dotIdx := -1
+
+	for i, r := range dec {
+		if r == '-' || r == '+' {
+			if i != 0 {
+				return dec + "\n"
 			}
+			continue
+		}
+		if r == '.' {
+			if hasDot {
+				return dec + "\n" 
+			}
+			hasDot = true
+			dotIdx = i
+			continue
+		}
+		if r < '0' || r > '9' {
+			return dec + "\n" 
+		}
+	}
+
+	if !hasDot {
+		return dec + "\n"
+	}
+
+	afterDot := dec[dotIdx+1:]
+
+	isOnlyZeros := true
+	for _, r := range afterDot {
+		if r != '0' {
+			isOnlyZeros = false
+			break
+		}
+	}
+	if len(afterDot) == 0 || isOnlyZeros {
+		return dec + "\n"
+	}
+
+	beforeDot := dec[:dotIdx]
+	combined := beforeDot + afterDot
+
+	i := 0
+	sign := ""
+	if combined[0] == '-' || combined[0] == '+' {
+		sign = string(combined[0])
+		i = 1
+	}
+
+	for i < len(combined)-1 && combined[i] == '0' {
+		i++
+	}
+
+	return sign + combined[i:] + "\n"
+}
+
+//RevConcatAlternate
+func RevConcatAlternate(slice1, slice2 []int) []int {
+	var result []int
+
+	i := len(slice1) - 1
+	j := len(slice2) - 1
+
+	if len(slice1) > len(slice2) {
+		for i >= len(slice2) {
+			result = append(result, slice1[i])
+			i--
+		}
+	} else if len(slice2) > len(slice1) {
+		for j >= len(slice1) {
+			result = append(result, slice2[j])
+			j--
+		}
+	}
+
+	for i >= 0 && j >= 0 {
+		result = append(result, slice1[i], slice2[j])
+		i--
+		j--
+	}
+
+	return result
+}
+//|
+func RevConcatAlternate(slice1, slice2 []int) []int {
+	var result []int
+
+	rev1 := make([]int, len(slice1))
+	for i := 0; i < len(slice1); i++ {
+		rev1[i] = slice1[len(slice1)-1-i]
+	}
+
+	rev2 := make([]int, len(slice2))
+	for i := 0; i < len(slice2); i++ {
+		rev2[i] = slice2[len(slice2)-1-i]
+	}
+
+	if len(slice1) >= len(slice2) {
+		for i := 0; i < len(slice2); i++ {
+			result = append(result, rev1[i], rev2[i])
+		}
+		result = append(result, rev1[len(slice2):]...)
+	} else {
+		for i := 0; i < len(slice1); i++ {
+			result = append(result, rev2[i], rev1[i])
+		}
+		result = append(result, rev2[len(slice1):]...)
+	}
+
+	return result
+}
+//|
+package piscine
+
+func RevConcatAlternate(slice1, slice2 []int) []int {
+	var result []int
+
+	i := len(slice1) - 1
+	j := len(slice2) - 1
+
+	for i >= 0 || j >= 0 {
+		if i > j {
+			result = append(result, slice1[i])
+			i--
+		} else if j > i {
+			result = append(result, slice2[j])
+			j--
+		} else {
+			result = append(result, slice1[i])
+			i--
 		}
 	}
 
 	return result
 }
-
-//
-
+//slice
 func Slice(a []string, nbrs ...int) []string {
 	if len(nbrs) == 0 {
 		return nil
@@ -1887,6 +2219,42 @@ func Slice(a []string, nbrs ...int) []string {
 		end = len(a)
 	}
 	if end < start {
+		return nil
+	}
+
+	return a[start:end]
+}
+//|
+package piscine
+
+func Slice(a []string, nbrs ...int) []string {
+	if len(nbrs) == 0 {
+		return nil
+	}
+
+	length := len(a)
+	start := nbrs[0]
+	end := length
+
+	if len(nbrs) > 1 {
+		end = nbrs[1]
+	}
+
+	if start < 0 {
+		start = length + start
+	}
+	if end < 0 {
+		end = length + end
+	}
+
+	if start < 0 {
+		start = 0
+	}
+	if end > length {
+		end = length
+	}
+
+	if start >= end || start >= length || end < 0 {
 		return nil
 	}
 
@@ -1981,7 +2349,6 @@ func main() {
 
 	inner := arrStr[1 : n-1]
 	
-	// Handle empty array case []
 	var arr []int
 	if !innerAllSpace(inner) {
 		rawElements := splitByComma(inner)
@@ -2005,7 +2372,6 @@ func main() {
 		return
 	}
 
-	// Find all pairs that sum up to the target
 	var pairs [][2]int
 	for i := 0; i < len(arr); i++ {
 		for j := i + 1; j < len(arr); j++ {
@@ -2015,7 +2381,6 @@ func main() {
 		}
 	}
 
-	// Output results based on findings
 	if len(pairs) == 0 {
 		printString("No pairs found.\n")
 	} else {
@@ -2026,8 +2391,6 @@ func main() {
 		printString("\n")
 	}
 }
-
-// --- Helper Functions (Replacing strings and strconv) ---
 
 func printString(s string) {
 	os.Stdout.WriteString(s)
@@ -2256,7 +2619,7 @@ func main() {
 	result := strings.Join(words[1:], " ") + " " + words[0]
 	fmt.Println(strings.TrimSpace(result))
 }
-//
+//wordflip
 
 import (
 	"fmt"
@@ -2328,4 +2691,949 @@ func WordFlip(str string) string {
 	result += "\n"
 
 	return result
+}
+
+// 8
+package piscine
+
+func ItoaBase(value, base int) string {
+	if value == 0 {
+		return "0"
+	}
+
+	charset := "0123456789ABCDEF"
+	isNegative := false
+
+	if value < 0 {
+		isNegative = true
+	}
+
+	var result []byte
+
+	for value != 0 {
+		remainder := value % base
+		if remainder < 0 {
+			remainder = -remainder
+		}
+		result = append(result, charset[remainder])
+		value /= base
+	}
+
+	if isNegative {
+		result = append(result, '-')
+	}
+
+	for i, j := 0, len(result)-1; i < j; i, j = i+1, j-1 {
+		result[i], result[j] = result[j], result[i]
+	}
+
+	return string(result)
+}
+
+//
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) == 0 {
+		fmt.Println("options: abcdefghijklmnopqrstuvwxyz")
+		return
+	}
+
+	var options int32 = 0
+
+	for _, arg := range args {
+		if len(arg) < 2 || arg[0] != '-' {
+			fmt.Println("Invalid Option")
+			return
+		}
+
+		if arg[1] == 'h' {
+			fmt.Println("options: abcdefghijklmnopqrstuvwxyz")
+			return
+		}
+
+		for i := 1; i < len(arg); i++ {
+			char := arg[i]
+			if char < 'a' || char > 'z' {
+				fmt.Println("Invalid Option")
+				return
+			}
+			options |= (1 << (char - 'a'))
+		}
+	}
+
+	var bytes [32]byte
+	for i := 0; i < 32; i++ {
+		if (options & (1 << (31 - i))) != 0 {
+			bytes[i] = '1'
+		} else {
+			bytes[i] = '0'
+		}
+	}
+
+	fmt.Printf("%s %s %s %s\n",
+		string(bytes[0:8]),
+		string(bytes[8:16]),
+		string(bytes[16:24]),
+		string(bytes[24:32]),
+	)
+}
+
+//|
+package main
+
+import (
+	"os"
+
+	"github.com/01-edu/z01"
+)
+
+func printOptions() {
+	options := "abcdefghijklmnopqrstuvwxyz"
+
+	z01.PrintRune('o')
+	z01.PrintRune('p')
+	z01.PrintRune('t')
+	z01.PrintRune('i')
+	z01.PrintRune('o')
+	z01.PrintRune('n')
+	z01.PrintRune('s')
+	z01.PrintRune(':')
+	z01.PrintRune(' ')
+
+	for _, char := range options {
+		z01.PrintRune(char)
+	}
+
+	z01.PrintRune('\n')
+}
+
+func printBits(n int) {
+	for i := 31; i >= 0; i-- {
+		if n&(1<<i) != 0 {
+			z01.PrintRune('1')
+		} else {
+			z01.PrintRune('0')
+		}
+
+		if i%8 == 0 && i != 0 {
+			z01.PrintRune(' ')
+		}
+	}
+
+	z01.PrintRune('\n')
+}
+
+func main() {
+	if len(os.Args) == 1 {
+		printOptions()
+		return
+	}
+
+	var options int
+	help := false
+
+	for _, arg := range os.Args[1:] {
+		if arg == "-h" || (len(arg) > 1 && arg[0] == '-' && containsH(arg)) {
+			if arg[1] == 'h' {
+				help = true
+				break
+			}
+		}
+	}
+
+	if help {
+		printOptions()
+		return
+	}
+
+	for _, arg := range os.Args[1:] {
+		if len(arg) < 2 || arg[0] != '-' {
+			z01.PrintRune('I')
+			z01.PrintRune('n')
+			z01.PrintRune('v')
+			z01.PrintRune('a')
+			z01.PrintRune('l')
+			z01.PrintRune('i')
+			z01.PrintRune('d')
+			z01.PrintRune(' ')
+			z01.PrintRune('O')
+			z01.PrintRune('p')
+			z01.PrintRune('t')
+			z01.PrintRune('i')
+			z01.PrintRune('o')
+			z01.PrintRune('n')
+			z01.PrintRune('\n')
+			return
+		}
+
+		for _, char := range arg[1:] {
+			if char < 'a' || char > 'z' {
+				z01.PrintRune('I')
+				z01.PrintRune('n')
+				z01.PrintRune('v')
+				z01.PrintRune('a')
+				z01.PrintRune('l')
+				z01.PrintRune('i')
+				z01.PrintRune('d')
+				z01.PrintRune(' ')
+				z01.PrintRune('O')
+				z01.PrintRune('p')
+				z01.PrintRune('t')
+				z01.PrintRune('i')
+				z01.PrintRune('o')
+				z01.PrintRune('n')
+				z01.PrintRune('\n')
+				return
+			}
+
+			options |= 1 << (char - 'a')
+		}
+	}
+
+	printBits(options)
+}
+
+func containsH(arg string) bool {
+	for _, char := range arg[1:] {
+		if char == 'h' {
+			return true
+		}
+	}
+
+	return false
+}
+//
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func isVowel(r rune) bool {
+	return r == 'a' || r == 'e' || r == 'i' || r == 'o' || r == 'u' ||
+		r == 'A' || r == 'E' || r == 'I' || r == 'O' || r == 'U'
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		return
+	}
+
+	str := args[0]
+	vowelIndex := -1
+
+	for i, r := range str {
+		if isVowel(r) {
+			vowelIndex = i
+			break
+		}
+	}
+
+	if vowelIndex == -1 {
+		fmt.Println("No vowels")
+		return
+	}
+
+	if vowelIndex == 0 {
+		fmt.Println(str + "ay")
+	} else {
+		fmt.Println(str[vowelIndex:] + str[:vowelIndex] + "ay")
+	}
+}
+//|
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func isVowel(r rune) bool {
+	return r == 'a' || r == 'e' || r == 'i' || r == 'o' || r == 'u' ||
+		r == 'A' || r == 'E' || r == 'I' || r == 'O' || r == 'U'
+}
+
+func printStr(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
+	z01.PrintRune('\n')
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		return
+	}
+
+	str := args[0]
+	vowelIndex := -1
+
+	for i, r := range str {
+		if isVowel(r) {
+			vowelIndex = i
+			break
+		}
+	}
+
+	if vowelIndex == -1 {
+		printStr("No vowels")
+		return
+	}
+
+	if vowelIndex == 0 {
+		printStr(str + "ay")
+	} else {
+		printStr(str[vowelIndex:] + str[:vowelIndex] + "ay")
+	}
+}
+//romanumbers
+
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+type RomanSymbol struct {
+	Value int
+	Symbol string
+	Calc string
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		return
+	}
+
+	num, err := strconv.Atoi(args[0])
+	if err != nil || num <= 0 || num >= 4000 {
+		fmt.Println("ERROR: cannot convert to roman digit")
+		return
+	}
+
+	symbols := []RomanSymbol{
+		{1000, "M", "M"},
+		{900, "CM", "(M-C)"},
+		{500, "D", "D"},
+		{400, "CD", "(D-C)"},
+		{100, "C", "C"},
+		{90, "XC", "(C-X)"},
+		{50, "L", "L"},
+		{40, "XL", "(L-X)"},
+		{10, "X", "X"},
+		{9, "IX", "(X-I)"},
+		{5, "V", "V"},
+		{4, "IV", "(V-I)"},
+		{1, "I", "I"},
+	}
+
+	var calcs []string
+	roman := ""
+
+	for _, s := range symbols {
+		for num >= s.Value {
+			calcs = append(calcs, s.Calc)
+			roman += s.Symbol
+			num -= s.Value
+		}
+	}
+
+	for i, calc := range calcs {
+		if i > 0 {
+			fmt.Print("+")
+		}
+		fmt.Print(calc)
+	}
+	fmt.Println()
+
+	fmt.Println(roman)
+}
+// |
+package main
+
+import (
+	"os"
+	"strconv"
+
+	"github.com/01-edu/z01"
+)
+
+func printString(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
+	z01.PrintRune('\n')
+}
+
+func main() {
+	if len(os.Args) != 2 {
+		return
+	}
+
+	number, err := strconv.Atoi(os.Args[1])
+
+	if err != nil || number <= 0 || number >= 4000 {
+		printString("ERROR: cannot convert to roman digit")
+		return
+	}
+
+	values := []int{
+		1000, 900, 500, 400,
+		100, 90, 50, 40,
+		10, 9, 5, 4,
+		1,
+	}
+
+	numerals := []string{
+		"M", "M-C", "D", "D-C",
+		"C", "C-X", "L", "L-X",
+		"X", "X-I", "V", "V-I",
+		"I",
+	}
+
+	roman := ""
+	calculation := ""
+
+	for i := 0; i < len(values); i++ {
+		for number >= values[i] {
+			number -= values[i]
+
+			calculation += numerals[i] + "+"
+
+			if numerals[i] == "M-C" {
+				roman += "CM"
+			} else if numerals[i] == "D-C" {
+				roman += "CD"
+			} else if numerals[i] == "C-X" {
+				roman += "XC"
+			} else if numerals[i] == "L-X" {
+				roman += "XL"
+			} else if numerals[i] == "X-I" {
+				roman += "IX"
+			} else if numerals[i] == "V-I" {
+				roman += "IV"
+			} else {
+				roman += numerals[i]
+			}
+		}
+	}
+
+	calculation = calculation[:len(calculation)-1]
+
+	printString(calculation)
+	printString(roman)
+}
+
+//9 brackets
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func checkBrackets(s string) bool {
+	var stack []rune
+
+	for _, r := range s {
+		switch r {
+		case '(', '[', '{':
+			stack = append(stack, r)
+		case ')':
+			if len(stack) == 0 || stack[len(stack)-1] != '(' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		case ']':
+			if len(stack) == 0 || stack[len(stack)-1] != '[' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		case '}':
+			if len(stack) == 0 || stack[len(stack)-1] != '{' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		}
+	}
+
+	return len(stack) == 0
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) == 0 {
+		return
+	}
+
+	for _, arg := range args {
+		if checkBrackets(arg) {
+			fmt.Println("OK")
+		} else {
+			fmt.Println("Error")
+		}
+	}
+}
+
+//|
+package main
+
+import (
+	"os"
+	"github.com/01-edu/z01"
+)
+
+func checkBrackets(s string) bool {
+	var stack []rune
+
+	for _, r := range s {
+		switch r {
+		case '(', '[', '{':
+			stack = append(stack, r)
+		case ')':
+			if len(stack) == 0 || stack[len(stack)-1] != '(' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		case ']':
+			if len(stack) == 0 || stack[len(stack)-1] != '[' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		case '}':
+			if len(stack) == 0 || stack[len(stack)-1] != '{' {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		}
+	}
+
+	return len(stack) == 0
+}
+
+func printStr(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
+	z01.PrintRune('\n')
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) == 0 {
+		return
+	}
+
+	for _, arg := range args {
+		if checkBrackets(arg) {
+			printStr("OK")
+		} else {
+			printStr("Error")
+		}
+	}
+}
+
+//rpncalc 
+package main
+
+import (
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func evaluateRPN(expr string) (int, bool) {
+	tokens := strings.Fields(expr)
+	if len(tokens) == 0 {
+		return 0, false
+	}
+
+	var stack []int
+
+	for _, token := range tokens {
+		switch token {
+		case "+", "-", "*", "/", "%":
+			if len(stack) < 2 {
+				return 0, false
+			}
+
+			b := stack[len(stack)-1]
+			a := stack[len(stack)-2]
+			stack = stack[:len(stack)-2]
+
+			var res int
+			switch token {
+			case "+":
+				res = a + b
+			case "-":
+				res = a - b
+			case "*":
+				res = a * b
+			case "/":
+				if b == 0 {
+					return 0, false
+				}
+				res = a / b
+			case "%":
+				if b == 0 {
+					return 0, false
+				}
+				res = a % b
+			}
+
+			stack = append(stack, res)
+
+		default:
+			val, err := strconv.Atoi(token)
+			if err != nil {
+				return 0, false
+			}
+			stack = append(stack, val)
+		}
+	}
+
+	if len(stack) != 1 {
+		return 0, false
+	}
+
+	return stack[0], true
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		fmt.Println("Error")
+		return
+	}
+
+	result, ok := evaluateRPN(args[0])
+	if !ok {
+		fmt.Println("Error")
+		return
+	}
+
+	fmt.Println(result)
+}
+
+//|
+package main
+
+import (
+	"os"
+	"strconv"
+	"strings"
+	"github.com/01-edu/z01"
+)
+
+func printStr(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
+	z01.PrintRune('\n')
+}
+
+func evaluateRPN(expr string) (int, bool) {
+	tokens := strings.Fields(expr)
+	if len(tokens) == 0 {
+		return 0, false
+	}
+
+	var stack []int
+
+	for _, token := range tokens {
+		switch token {
+		case "+", "-", "*", "/", "%":
+			if len(stack) < 2 {
+				return 0, false
+			}
+
+			b := stack[len(stack)-1]
+			a := stack[len(stack)-2]
+			stack = stack[:len(stack)-2]
+
+			var res int
+			switch token {
+			case "+":
+				res = a + b
+			case "-":
+				res = a - b
+			case "*":
+				res = a * b
+			case "/":
+				if b == 0 {
+					return 0, false
+				}
+				res = a / b
+			case "%":
+				if b == 0 {
+					return 0, false
+				}
+				res = a % b
+			}
+
+			stack = append(stack, res)
+
+		default:
+			val, err := strconv.Atoi(token)
+			if err != nil {
+				return 0, false
+			}
+			stack = append(stack, val)
+		}
+	}
+
+	if len(stack) != 1 {
+		return 0, false
+	}
+
+	return stack[0], true
+}
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		printStr("Error")
+		return
+	}
+
+	result, ok := evaluateRPN(args[0])
+	if !ok {
+		printStr("Error")
+		return
+	}
+
+	printStr(strconv.Itoa(result))
+}
+
+//10
+
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		return
+	}
+
+	code := args[0]
+	memory := make([]byte, 2048)
+	ptr := 0
+
+	// Pre-compute matching bracket locations
+	jumpMap := make(map[int]int)
+	var stack []int
+
+	for i, char := range code {
+		if char == '[' {
+			stack = append(stack, i)
+		} else if char == ']' {
+			if len(stack) > 0 {
+				start := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				jumpMap[start] = i
+				jumpMap[i] = start
+			}
+		}
+	}
+
+	pc := 0
+	for pc < len(code) {
+		switch code[pc] {
+		case '>':
+			ptr++
+		case '<':
+			ptr--
+		case '+':
+			memory[ptr]++
+		case '-':
+			memory[ptr]--
+		case '.':
+			fmt.Printf("%c", memory[ptr])
+		case '[':
+			if memory[ptr] == 0 {
+				pc = jumpMap[pc]
+			}
+		case ']':
+			if memory[ptr] != 0 {
+				pc = jumpMap[pc]
+			}
+		}
+		pc++
+	}
+}
+
+//|
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 1 {
+		return
+	}
+
+	code := args[0]
+	memory := make([]byte, 2048)
+	ptr := 0
+
+	jumpMap := make(map[int]int)
+	var stack []int
+
+	for i, char := range code {
+		if char == '[' {
+			stack = append(stack, i)
+		} else if char == ']' {
+			if len(stack) > 0 {
+				start := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				jumpMap[start] = i
+				jumpMap[i] = start
+			}
+		}
+	}
+
+	pc := 0
+	for pc < len(code) {
+		switch code[pc] {
+		case '>':
+			ptr++
+		case '<':
+			ptr--
+		case '+':
+			memory[ptr]++
+		case '-':
+			memory[ptr]--
+		case '.':
+			fmt.Printf("%c", memory[ptr])
+		case '[':
+			if memory[ptr] == 0 {
+				pc = jumpMap[pc]
+			}
+		case ']':
+			if memory[ptr] != 0 {
+				pc = jumpMap[pc]
+			}
+		}
+		pc++
+	}
+}
+
+//grouping
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	args := os.Args[1:]
+
+	if len(args) != 2 || args[1] == "" {
+		return
+	}
+
+	pattern := args[0]
+	text := args[1]
+
+	if len(pattern) < 3 || pattern[0] != '(' || pattern[len(pattern)-1] != ')' {
+		return
+	}
+
+	inside := pattern[1 : len(pattern)-1]
+	if inside == "" {
+		return
+	}
+
+	options := strings.Split(inside, "|")
+	for _, opt := range options {
+		if opt == "" {
+			return
+		}
+	}
+
+	words := extractWords(text)
+	matchIndex := 1
+
+	for _, word := range words {
+		clean := cleanWord(word)
+		for _, opt := range options {
+			if strings.Contains(clean, opt) {
+				fmt.Printf("%d: %s\n", matchIndex, clean)
+				matchIndex++
+			}
+		}
+	}
+}
+
+func extractWords(text string) []string {
+	var words []string
+	var current []rune
+
+	for _, r := range text {
+		if r == ' ' || r == '\t' || r == '\n' {
+			if len(current) > 0 {
+				words = append(words, string(current))
+				current = nil
+			}
+		} else {
+			current = append(current, r)
+		}
+	}
+	if len(current) > 0 {
+		words = append(words, string(current))
+	}
+	return words
+}
+
+func cleanWord(word string) string {
+	start := 0
+	end := len(word)
+
+	for start < end && !isWordChar(rune(word[start])) {
+		start++
+	}
+	for end > start && !isWordChar(rune(word[end-1])) {
+		end--
+	}
+
+	return word[start:end]
+}
+
+func isWordChar(r rune) bool {
+	return (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '’' || r == '\''
 }
